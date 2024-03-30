@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>Détails du tableau de notes "{{ '{' }}{{ boardName }}{{ '}' }}"</h2>
+  FormsModule,
+
+  <!-- Formulaire pour créer une nouvelle note -->
+  <form (submit)="createNote()">
+    <div class="form-group">
+      <label for="title">Titre :</label>
+      <input type="text" class="form-control" id="title" [(ngModel)]="notes.title" name="title">
+    </div>
+    <div class="form-group">
+      <label for="text">Texte :</label>
+      <textarea class="form-control" id="text" [(ngModel)]="notes.text" name="text"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter note</button>
+  </form>
+
+  <!-- Affichage des notes existantes -->
+  <div class="notes">
+  </div>
+</div>
