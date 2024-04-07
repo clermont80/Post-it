@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BlocNoteService } from '../../services/bloc-note.service';
 import { BlocNoteComponent } from '../bloc-notes/bloc-notes.component';
+import { Router } from '@angular/router';
 
 
 
@@ -19,13 +20,15 @@ export class BlocNotePageComponent implements OnInit {
   noteName: string = '';
   noteColor: string = 'bg-red-500'; // Couleur par défaut
 
-  constructor(private blocNoteService: BlocNoteService) { }
+  constructor(private blocNoteService: BlocNoteService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.notes = this.blocNoteService.getNotes();
   }
 
-  createNote() {
+  createNote() 
+  {
     const newNote: BlocNote = {
       name: this.noteName,
       id: this.blocNoteService.getIdNumer(),
@@ -36,10 +39,15 @@ export class BlocNotePageComponent implements OnInit {
     this.noteName = ''; // Réinitialiser le champ du nom du bloc-note
   }
 
-  deleteNote(index: number): void {
+  deleteNote(index: number): void 
+  {
     this.blocNoteService.deleteNote(index);
   }
 
+  navigateToBlocNoteDetail(noteId: number): void
+  {
+    this.router.navigate(['/bloc-note', noteId]);
+  }
 }
 
 interface BlocNote

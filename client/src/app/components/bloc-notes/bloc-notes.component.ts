@@ -14,7 +14,7 @@ export class BlocNoteComponent {
 
   selectNote()
   {
-    console.log("proute");
+    // console.log("proute");
   }
 
   constructor() { }

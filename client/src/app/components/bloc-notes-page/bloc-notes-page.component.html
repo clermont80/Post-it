@@ -3,7 +3,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-6">Blocs-notes</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let note of notes; let i = index" [class]="note.color" class="mb-4 cursor-pointer relative">
+      <div *ngFor="let note of notes; let i = index" [class]="note.color" class="mb-4 cursor-pointer relative" (click)="navigateToBlocNoteDetail(note.id)">
         <h2 class="text-white font-bold py-2 px-4 rounded">{{ note.name }}</h2>
         <button (click)="deleteNote(i)" class="absolute top-0 right-0 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full -mt-3 -mr-3">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">

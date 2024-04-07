@@ -1,0 +1,17 @@
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" *ngIf="currentNote">
+  <div class="bg-white rounded-lg p-8 max-w-md w-full">
+    <!-- Modal content -->
+    <h2 class="text-xl font-semibold mb-4">Modifier la note</h2>
+    <!-- Form for updating the note -->
+    <form (ngSubmit)="updateNote()">
+      <!-- Inputs for editing the note -->
+      <label class="block mb-2">Titre:</label>
+      <input type="text" class="border border-gray-300 rounded w-full px-3 py-2 mb-4" [(ngModel)]="currentNote.title" name="title">
+
+      <label class="block mb-2">Contenu:</label>
+      <textarea class="border border-gray-300 rounded w-full px-3 py-2 mb-4" [(ngModel)]="currentNote.content" name="content"></textarea>
+
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Enregistrer</button>
+    </form>
+  </div>
+</div>
