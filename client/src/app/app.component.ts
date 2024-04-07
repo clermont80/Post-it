@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { BoardsComponent } from './components/boards/boards.component';
-import { BoardDetailsComponent } from './components/board-details/board-details.component';
+import { Component }        from '@angular/core';
+import { RouterOutlet }     from '@angular/router';
+import { NavbarComponent }  from './components/navbar/navbar.component';
+import { BlocNotePageComponent } from './components/bloc-notes-page/bloc-notes-page.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, BoardsComponent, BoardDetailsComponent],
+  imports: [RouterOutlet, NavbarComponent, BlocNotePageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -1,14 +1,14 @@
-import { Routes } from '@angular/router';
-import { BoardDetailsComponent } from './components/board-details/board-details.component';
-import { BoardsComponent } from './components/boards/boards.component';
+import { Routes }                 from '@angular/router';
+import { AboutComponent }         from './components/about/about.component';
+import { BlocNotePageComponent } from './components/bloc-notes-page/bloc-notes-page.component';
 
 
 
 
 
-export const routes: Routes =
-  [
-    { path: 'details/:boardName', component: BoardDetailsComponent },
-    { path: 'boards', component: BoardsComponent },
-    { path: '**', redirectTo: '/boards', pathMatch: 'full' }
-  ];
+export const routes: Routes = [
+  { path: "bloc-note", component: BlocNotePageComponent },
+  { path: "about", component: AboutComponent },
+  { path: "",   redirectTo: "bloc-note", pathMatch: "full" },
+  { path: "**", redirectTo: "bloc-note" }
+];
