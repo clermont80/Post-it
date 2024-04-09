@@ -24,7 +24,7 @@ export class BlocNotesDetailComponent {
   blocNoteId: number  = -1;
   showModifyNoteModal: boolean = false;
 
-  constructor(private noteService: NoteService,private router: Router, private route: ActivatedRoute, private modifyNoteModalService: ModifyNoteModalService) {}
+  constructor(private noteService: NoteService, private router: Router, private route: ActivatedRoute, private modifyNoteModalService: ModifyNoteModalService) {}
 
 
   ngOnInit(): void
@@ -38,10 +38,10 @@ export class BlocNotesDetailComponent {
     
     this.blocNoteId = idString ? parseInt(idString, 10) : -1;
     
-    if (this.blocNoteId !== -1) {
-      this.notes = this.noteService.getNotes(this.blocNoteId);
-    } else {
-      this.notes = []; // Ou tout autre traitement à effectuer lorsque l'identifiant du bloc-notes n'est pas valide
+    if (this.blocNoteId !== -1) 
+    {
+      // this.notes = this.noteService.getNotes(this.blocNoteId);
+      this.notes = this.noteService.getAllNotes().filter(note => note.blocNoteId === this.blocNoteId)
     }
 
   }
@@ -56,17 +56,25 @@ export class BlocNotesDetailComponent {
       blocNoteId: this.blocNoteId
     };
 
+
+
     this.noteService.increaseId();
     this.noteService.addNote(newNote);
     this.noteTitle = '';
     this.noteContent = '';
     this.noteColor = 'bg-red-500';
+
+    console.log("Notes", this.notes, this.noteService.getAllNotes(), this.noteService.getNotes(this.blocNoteId));
+    this.notes = this.noteService.getNotes(this.blocNoteId);
+    
   }
 
-  // deleteNote(index: number): void
-  // {
-  //   this.noteService.deleteNote(index);
-  // }
+  deleteNote(note: Note)
+  {
+    this.noteService.deleteNote(note);
+    this.notes = this.noteService.getNotes(this.blocNoteId);
+
+  }
 
   returnToBlocNoteCreation()
   {

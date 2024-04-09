@@ -17,6 +17,11 @@ export class NoteService {
   }
 
 
+
+  getAllNotes()
+  {
+    return this.notes;
+  }
   
 
   getNoteById(index: number): Note | undefined
@@ -34,6 +39,7 @@ export class NoteService {
 
   addNote(note: Note): void {
     this.notes.push(note);
+    console.log(this.notes);
     
   }
 
