@@ -1,0 +1,31 @@
+<!-- bloc-note-page.component.html -->
+<div class="container mx-auto py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Blocs-notes</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let note of notes; let i = index" [class]="note.color" class="mb-4 cursor-pointer relative" (click)="navigateToBlocNoteDetail(note.id)">
+        <h2 class="text-white font-bold py-2 px-4 rounded">{{ note.name }}</h2>
+        <button (click)="deleteNote(i)" class="absolute top-0 right-0 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full -mt-3 -mr-3">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="mt-12">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Créer un nouveau bloc-note</h2>
+      <div class="flex flex-col md:flex-row md:space-x-4">
+        <input type="text" class="w-full md:w-1/2 px-3 py-2 border rounded-md mb-4 md:mb-0" [(ngModel)]="noteName" placeholder="Nom du bloc-note">
+        <select class="w-full md:w-1/3 px-3 py-2 border rounded-md mb-4 md:mb-0" [(ngModel)]="noteColor">
+          <option value="bg-red-500">Rouge</option>
+          <option value="bg-blue-500">Bleu</option>
+          <option value="bg-green-500">Vert</option>
+          <option value="bg-yellow-500">Jaune</option>
+          <option value="bg-yellow-950">Marron</option>
+          <option value="bg-purple-500">Violet</option>
+        </select>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="createNote()">Créer</button>
+      </div>
+    </div>
+  </div>
+</div>

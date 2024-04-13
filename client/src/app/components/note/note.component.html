@@ -1,0 +1,16 @@
+<!-- note.component.html -->
+<div [class]="note.color" class="relative p-4 mb-4">
+  <!-- Bouton pour supprimer en haut à droite -->
+  <button (click)="onDeleteNote()" class="absolute top-0 right-0 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-full -mt-2 -mr-2">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  <h2 class="text-white font-bold mb-2">{{ note.title }}</h2>
+  <p class="text-white">{{ note.content }}</p>
+
+  <!-- Bouton pour modifier en bas à droite -->
+  <button (click)="editNote()" class="absolute bottom-0 right-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full -mb-2 -mr-2">
+    Modifier la note
+  </button>
+</div>
