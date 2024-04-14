@@ -41,7 +41,12 @@ export class BlocNotesDetailComponent {
     if (this.blocNoteId !== -1) 
     {
       // this.notes = this.noteService.getNotes(this.blocNoteId);
-      this.notes = this.noteService.getAllNotes().filter(note => note.blocNoteId === this.blocNoteId)
+      // this.notes = this.noteService.getAllNotes().filter(note => note.blocNoteId === this.blocNoteId)
+      this.noteService.refreshNotes(this.blocNoteId);
+      this.noteService.getNotes(this.blocNoteId).subscribe((notes: Note[]) => {
+        this.notes = notes;
+      });
+
     }
 
   }
@@ -65,15 +70,15 @@ export class BlocNotesDetailComponent {
     this.noteColor = 'bg-red-500';
 
     console.log("Notes", this.notes, this.noteService.getAllNotes(), this.noteService.getNotes(this.blocNoteId));
-    this.notes = this.noteService.getNotes(this.blocNoteId);
+    // this.notes = this.noteService.getNotes(this.blocNoteId);
     
   }
 
   deleteNote(note: Note)
   {
     this.noteService.deleteNote(note);
-    this.notes = this.noteService.getNotes(this.blocNoteId);
-
+    // this.notes = this.noteService.getNotes(this.blocNoteId);
+    
   }
 
   returnToBlocNoteCreation()

@@ -40,7 +40,7 @@ public class BlocNoteService
     public BlocNote updateBlocNote (BlocNote blocNote) throws NotFoundException, DBException
     {
         BlocNote isBlocNoteExist = blocNoteRepository.findById(blocNote.getId()).orElse(null);
-        if (isBlocNoteExist != null) throw new NotFoundException("Le bloc note n'existe pas (id = " + blocNote.getId() + ")");
+        if (isBlocNoteExist == null) throw new NotFoundException("Le bloc note n'existe pas (id = " + blocNote.getId() + ")");
 
         try
         {
@@ -55,7 +55,7 @@ public class BlocNoteService
     public void deleteBlocNote(Long id) throws NotFoundException, DBException
     {
         BlocNote isBlocNoteExist = blocNoteRepository.findById(id).orElse(null);
-        if (isBlocNoteExist != null) throw new NotFoundException("Le bloc note n'existe pas (id = " + id + ")");
+        if (isBlocNoteExist == null) throw new NotFoundException("Le bloc note n'existe pas (id = " + id + ")");
 
         try
         {

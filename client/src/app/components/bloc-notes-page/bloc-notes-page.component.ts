@@ -24,14 +24,17 @@ export class BlocNotePageComponent implements OnInit {
 
   ngOnInit(): void 
   {
-    this.notes = this.blocNoteService.getNotes();
+    this.blocNoteService.getNotes().subscribe(notes => {
+      this.notes = notes;
+    });
+
   }
 
   createNote() 
   {
     const newNote: BlocNote = {
       name: this.noteName,
-      id: this.blocNoteService.getIdNumer(),
+      id: this.blocNoteService.getIdNumber(),
       color: this.noteColor
     };
     this.blocNoteService.increaseId();

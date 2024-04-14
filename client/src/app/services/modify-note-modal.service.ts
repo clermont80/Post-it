@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -11,8 +12,20 @@ export class ModifyNoteModalService {
   private currentNoteSubject = new BehaviorSubject<Note | null>(null);
   currentNote$ = this.currentNoteSubject.asObservable();
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
+
+//   curl -X 'PUT' \
+//   'http://localhost:8080/notes' \
+//   -H 'accept: */*' \
+//   -H 'Content-Type: application/json' \
+//   -d '{
+//   "id": 0,
+//   "blocNoteId": 0,
+//   "title": "string",
+//   "content": "string",
+//   "color": "string"
+// }'
   openModal(note: Note | undefined): void 
   {
     if (note) 

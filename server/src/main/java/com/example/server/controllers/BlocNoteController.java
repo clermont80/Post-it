@@ -67,6 +67,7 @@ public class BlocNoteController
     {
         try 
         {
+            log.info("deleteBlocNote : " + id);
             blocNoteService.deleteBlocNote(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } 
