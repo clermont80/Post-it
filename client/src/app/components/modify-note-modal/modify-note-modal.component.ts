@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoteService } from '../../services/note.service';
 import { ModifyNoteModalService } from '../../services/modify-note-modal.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-modify-note-modal',
@@ -17,7 +18,7 @@ export class ModifyNoteModalComponent {
   currentNote: Note | null = null;
   
 
-  constructor(private noteService: NoteService, private modifyNoteModalService: ModifyNoteModalService) { }
+  constructor(private noteService: NoteService, private modifyNoteModalService: ModifyNoteModalService, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     // Initialiser la note actuelle à partir du service
@@ -35,6 +36,9 @@ export class ModifyNoteModalComponent {
     if (this.currentNote) 
     {
       // Mettre à jour la note ici
+      this.httpClient.put(`/api/notes`, this.currentNote).subscribe(() => {
+        // this.noteService.refreshNotes();
+      });
     }
     this.modifyNoteModalService.closeModal()
   }
