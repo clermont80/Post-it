@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NoteComponent } from '../note/note.component';
 import { ModifyNoteModalComponent } from '../modify-note-modal/modify-note-modal.component';
 import { ModifyNoteModalService } from '../../services/modify-note-modal.service';
+import { BlocNoteService } from '../../services/bloc-note.service';
 
 
 
@@ -18,13 +19,14 @@ import { ModifyNoteModalService } from '../../services/modify-note-modal.service
 })
 export class BlocNotesDetailComponent {
   notes: Note[] = [];
+  blocNoteName: string = '';
   noteTitle: string = '';
   noteContent: string = '';
   noteColor: string = 'bg-red-500'; // Couleur par défaut
   blocNoteId: number  = -1;
   showModifyNoteModal: boolean = false;
 
-  constructor(private noteService: NoteService, private router: Router, private route: ActivatedRoute, private modifyNoteModalService: ModifyNoteModalService) {}
+  constructor(private noteService: NoteService, private blocNoteService : BlocNoteService, private router: Router, private route: ActivatedRoute, private modifyNoteModalService: ModifyNoteModalService) {}
 
 
   ngOnInit(): void
@@ -41,7 +43,16 @@ export class BlocNotesDetailComponent {
     if (this.blocNoteId !== -1) 
     {
       // this.notes = this.noteService.getNotes(this.blocNoteId);
-      this.notes = this.noteService.getAllNotes().filter(note => note.blocNoteId === this.blocNoteId)
+      // this.notes = this.noteService.getAllNotes().filter(note => note.blocNoteId === this.blocNoteId)
+      this.noteService.refreshNotes(this.blocNoteId);
+      this.blocNoteService.getBlocNoteById(this.blocNoteId).subscribe((blocNote) => {
+        console.log("BlocNote", blocNote);
+        this.blocNoteName = blocNote.name;
+      });
+      this.noteService.getNotes(this.blocNoteId).subscribe((notes: Note[]) => {
+        this.notes = notes;
+      });
+
     }
 
   }
@@ -65,15 +76,15 @@ export class BlocNotesDetailComponent {
     this.noteColor = 'bg-red-500';
 
     console.log("Notes", this.notes, this.noteService.getAllNotes(), this.noteService.getNotes(this.blocNoteId));
-    this.notes = this.noteService.getNotes(this.blocNoteId);
+    // this.notes = this.noteService.getNotes(this.blocNoteId);
     
   }
 
   deleteNote(note: Note)
   {
     this.noteService.deleteNote(note);
-    this.notes = this.noteService.getNotes(this.blocNoteId);
-
+    // this.notes = this.noteService.getNotes(this.blocNoteId);
+    
   }
 
   returnToBlocNoteCreation()

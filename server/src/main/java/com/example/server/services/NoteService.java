@@ -80,6 +80,22 @@ public class NoteService
         }
     }
 
+    // Delete all notes with the same blocNoteId
+    public void deleteNoteByBlocNoteId(Long blocNoteId) throws NotFoundException, DBException
+    {
+        List<Note> notes = noteRepository.findByBlocNoteId(blocNoteId);
+        if (notes.isEmpty()) throw new NotFoundException("Aucune note n'existe pour le bloc note (id = " + blocNoteId + ")");
+
+        try
+        {
+            notes.forEach(note -> noteRepository.deleteById(note.getId()));
+        }
+        catch (Exception e)
+        {
+            throw new DBException("Erreur lors de la suppression de s notes pour le bloc note (id = " + blocNoteId + ")");
+        }
+    }
+
     public void deleteAll()
     {
         noteRepository.deleteAll();

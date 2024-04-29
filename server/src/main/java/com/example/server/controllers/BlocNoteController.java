@@ -29,6 +29,23 @@ public class BlocNoteController
         return ResponseEntity.ok(blocNoteService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getBlocNoteById (@PathVariable Long id)
+    {
+        try 
+        {
+            return ResponseEntity.ok(blocNoteService.findById(id));
+        } 
+        catch (NotFoundException e) 
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        catch (DBException e) 
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     
     @PostMapping
     public ResponseEntity<BlocNote> createBlocNote (@RequestBody BlocNote blocNote)
@@ -67,6 +84,7 @@ public class BlocNoteController
     {
         try 
         {
+            log.info("deleteBlocNote : " + id);
             blocNoteService.deleteBlocNote(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } 

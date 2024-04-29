@@ -1,20 +1,38 @@
 // bloc-note.service.ts
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BlocNoteService {
-  private notes: BlocNote[] = [];
+export class BlocNoteService 
+{
+  private notesSubject: BehaviorSubject<BlocNote[]> = new BehaviorSubject<BlocNote[]>([]);
+  public notes$ = this.notesSubject.asObservable();
+
   private idNumber: number = 0;
 
-  constructor() { }
-
-  getNotes(): BlocNote[] {
-    return this.notes;
+  constructor(private httpClient: HttpClient) {
+    this.refreshBlocNotes();
   }
 
-  getIdNumer(): number {
+  refreshBlocNotes() {
+    this.httpClient.get("/api/bloc-notes").subscribe((notes: any) => {
+      console.log(notes);
+      this.notesSubject.next(notes);
+    });
+  }
+
+  getBlocNoteById(id: number): Observable<BlocNote> {
+    return this.httpClient.get<BlocNote>(`/api/bloc-notes/${id}`);
+  }
+
+  getNotes(): Observable<BlocNote[]> {
+    return this.notes$;
+  }
+
+  getIdNumber(): number {
     return this.idNumber;
   }
 
@@ -23,11 +41,29 @@ export class BlocNoteService {
   }
 
   addNote(note: BlocNote): void {
-    this.notes.push(note);
+    this.httpClient.post("/api/bloc-notes", note).subscribe(() => {
+      this.refreshBlocNotes();
+    });
   }
 
   deleteNote(index: number): void {
-    this.notes.splice(index, 1);
+    // Supprimez la note du tableau local
+    const notes = this.notesSubject.getValue();
+    const note = this.notesSubject.getValue()[index];
+    notes.splice(index, 1);
+    this.notesSubject.next(notes);
+
+    // console.log("Note to delete", note.id);
+    
+    this.httpClient.delete(`/api/bloc-notes/${note.id}`).subscribe(() => {
+      this.refreshBlocNotes();
+    });
+
+    this.httpClient.delete(`/api/notes/blocNote/${note.id}`).subscribe(() => {
+      this.refreshBlocNotes();
+    });
+
+
   }
 }
 

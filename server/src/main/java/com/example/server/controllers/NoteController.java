@@ -31,7 +31,7 @@ public class NoteController
     }
 
     @GetMapping("/{blocNoteId}")
-    public ResponseEntity<List<Note>> getNotesByBlocNoteId(Long blocNoteId)
+    public ResponseEntity<List<Note>> getNotesByBlocNoteId(@PathVariable Long blocNoteId)
     {
         return ResponseEntity.ok(noteService.findByBlocNoteId(blocNoteId));
     }
@@ -80,6 +80,25 @@ public class NoteController
         try
         {
             noteService.deleteNote (id);
+            return ResponseEntity.ok().build();
+        }
+        catch (NotFoundException e)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        catch (DBException e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // Delete all notes with the same blocNoteId
+    @DeleteMapping("/blocNote/{blocNoteId}")
+    public ResponseEntity<Void> deleteNoteByBlocNoteId(@PathVariable Long blocNoteId)
+    {
+        try
+        {
+            noteService.deleteNoteByBlocNoteId(blocNoteId);
             return ResponseEntity.ok().build();
         }
         catch (NotFoundException e)
