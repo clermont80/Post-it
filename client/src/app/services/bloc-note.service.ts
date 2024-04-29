@@ -24,6 +24,10 @@ export class BlocNoteService
     });
   }
 
+  getBlocNoteById(id: number): Observable<BlocNote> {
+    return this.httpClient.get<BlocNote>(`/api/bloc-notes/${id}`);
+  }
+
   getNotes(): Observable<BlocNote[]> {
     return this.notes$;
   }

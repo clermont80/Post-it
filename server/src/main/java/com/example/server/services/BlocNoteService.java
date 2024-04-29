@@ -73,6 +73,21 @@ public class BlocNoteService
         this.blocNoteRepository.deleteAll();
     }
 
+    public Object findById(Long id) throws NotFoundException, DBException
+    {
+        BlocNote isBlocNoteExist = blocNoteRepository.findById(id).orElse(null);
+        if (isBlocNoteExist == null) return new NotFoundException("Le bloc note n'existe pas (id = " + id + ")");
+
+        try
+        {
+            return blocNoteRepository.findById(id);
+        }
+        catch (Exception e)
+        {
+            return new DBException("Erreur lors de la recherche du bloc note (id = " + id + ")");
+        }
+    }
+
 
 
 }
